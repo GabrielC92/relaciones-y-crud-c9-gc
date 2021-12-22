@@ -11,7 +11,9 @@ module.exports = {
             .catch(error => console.log(error));
     },
     detail: (req,res) => {
-        db.Actor.findByPk(req.params.id)
+        db.Actor.findByPk(req.params.id,{
+            include: ['movie']
+        })
             .then(actor => {
                 res.render('actorsDetail',{
                     actor

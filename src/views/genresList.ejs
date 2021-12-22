@@ -12,10 +12,12 @@
         <ul>
             <% for( let i = 0; i < genres.length; i++ ) { %>
             <li>
-                <a href="/genres/detail/<%= genres[i].id %>"><%= genres[i].name %></a>
+                <a href="/genres/detail/<%= genres[i].id %>"><%= genres[i].id %>) <%= genres[i].name %></a>
             </li><br>
             <% } %>
         </ul>
+        <br>
+        <p><a  class="botonVolver" href="/movies">Listado de Películas</a></p>
     </main>
 </body>
 

@@ -27,7 +27,6 @@ module.exports = (sequelize, dataTypes) => {
         }
     };
     let config = {
-        tableName: 'actors',
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
@@ -37,7 +36,7 @@ module.exports = (sequelize, dataTypes) => {
     const Actor = sequelize.define(alias, cols, config); 
 
     //Aquí debes realizar lo necesario para crear las relaciones con el modelo (Movie)
-    Actor.associate = models => {
+    Actor.associate = function(models) {
         Actor.belongsTo(models.Movie, {
             as: 'movie',
             foreignKey: 'favorite_movie_id'
