@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head') %>
+    <body>
+        <%- include('partials/header') %>
+        <main>
+            <figure>
+                <img src="/img/logo-DH.png" alt="Logo Digital House">
+            </figure>
+            <%- include('partials/search') %>
+            <h1><%= title %>: <%= busqueda %></h1><br>
+            <ul>
+                <% if (movies.length > 0) { %>
+                    <% for( let i = 0; i < movies.length; i++ ) { %>
+                        <li>
+                            <a href="/movies/detail/<%= movies[i].id %>"><%= movies[i].title %></a>
+                        </li><br>
+                    <% } %>
+                <% } else { %>
+                 <p>No hay resultados para tu búsqueda</p>
+                <% } %>
+            </ul>
+        </main>
+        <%- include('partials/scripts') %>
+    </body>
+</html>

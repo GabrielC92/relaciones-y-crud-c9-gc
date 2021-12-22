@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', {title: movie.title}) %>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <figure>
+            <img src="/img/logo-DH.png" alt="Logo Digital House">
+        </figure>
+        <%- include('partials/search') %>
+        <h1><%= movie.title %> </h1>    
+        <br>
+        <p>RATING: <%= movie.rating %></p>
+        <br>
+        <p>AWARDS: <%= movie.awards %></p>
+        <br>
+        <p>LENGTH: <%= movie.length + ' min'%></p>
+        <br>
+        <p>RELEASE DATE: <%= movie.release_date %></p>
+        <br>
+        <p>GENRE: <%= movie.genre.name %></p>
+        <br>
+        <section>
+            <!--Aquí debe colocar los botones de Modificar - Borrar y Listado de Películas-->
+            <a class="botonAgregar" href="/movies/add">
+                Agregar
+            </a>
+            <a class="botonModificar" href="/movies/edit/<%= movie.id %>">
+                Modificar
+            </a>
+            <a class="botonBorrar" href="/movies/delete/<%= movie.id %>">
+                Borrar
+            </a>
+            <a class="botonVolver" href="/movies">
+                Listado de Películas
+            </a>
+        </section>
+    </main>
+    <%- include('partials/scripts') %>
+</body>
+</html>

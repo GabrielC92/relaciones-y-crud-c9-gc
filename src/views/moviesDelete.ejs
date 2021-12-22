@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('partials/head', {title: 'Borrado de la Película'}) %>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <figure>
+            <img src="/img/logo-DH.png" alt="Logo Digital House">
+          </figure><br>
+        <h1>Estas seguro de querer borrar esta película: <%= Movie.title %>???</h1><br>
+        <p>
+            <form class="style-form" action="/movies/destroy/<%= Movie.id %>?_method=DELETE" method="POST">
+                <br>
+                <p> <button class="botonBorrar" type="submit">Borrar la Película</button>
+                
+                <a class="botonVolver" href="/movies">Listado de Películas</a></p>
+        
+            </form>
+        </p>
+    </main>
+    
+</body>
+
+</html>

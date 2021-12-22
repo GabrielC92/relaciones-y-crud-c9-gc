@@ -1,0 +1,62 @@
+header{
+    background-color: #000000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+header .box-titulo .link-home{
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+header .burger-menu{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+header .burger-menu .check{
+    display: none;
+}
+header .burger-menu .check:checked ~ ul{
+    display: inline;
+}
+header .burger-menu .burger{
+    background-color: #d41111;
+    border-radius: 8px;
+    font-size: 22px;
+    padding: 4px 9px;
+    margin: 2px;
+    color: #000000;
+    align-self: flex-end;
+    font-weight: 600;
+}
+header .burger-menu ul{
+    display: none;
+}
+header .burger-menu ul li{
+    list-style: none;
+    margin: 10px auto;
+}
+header .burger-menu ul li .link-menu{
+    text-decoration: none;
+    color: #fff;
+}
+
+@media (min-width: 769px) {
+    header{
+        flex-direction: column;
+    }
+    header .burger-menu{
+        justify-content: flex-start;
+    }
+    header .burger-menu .burger{
+        display: none;
+    }
+    header .burger-menu ul{
+        display: inline-flex;
+        flex-wrap: wrap;
+    }
+    header .burger-menu ul li:first-child{
+        margin-left: 0;
+    }
+}

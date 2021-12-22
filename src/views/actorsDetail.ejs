@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/head', {title: `${actor.first_name} ${actor.last_name}`}) %>
+    <body>
+        <%- include('partials/header') %>
+        <main>
+            <figure>
+                <img src="/img/logo-DH.png" alt="Logo Digital House">
+            </figure><br>
+            <h1><%= `${actor.first_name} ${actor.last_name}` %></h1>
+            <br>
+            <p>NAME: <%= actor.first_name %></p>
+            <br>
+            <p>LAST NAME: <%= actor.last_name %></p>
+            <br>
+            <p>RANKING: <%= actor.ranking %></p>
+            <br>
+            <p>FAVORITE MOVIE: <%= actor.favorite_movie_id %></p>
+        </main>
+    </body>
+</html>

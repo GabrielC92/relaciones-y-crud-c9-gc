@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', {title: 'Películas ordenadas por rating'}) %>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <figure>
+            <img src="/img/logo-DH.png" alt="Logo Digital House">
+        </figure>
+        <%- include('partials/search') %>
+        <h1>PELÍCULAS ORDENADAS POR POSICIÓN</h1><br>
+        <ul>
+            <% for( let i = 0; i < movies.length; i++ ) { %>
+            <li>
+                <a href="/movies/detail/<%=movies[i].id%>"><%= movies[i].title %></a> <br>
+                <%= 'RATING: ' + movies[i].rating %>
+            </li><br>
+            <% } %>
+        </ul>
+    </main>
+    <%- include('partials/scripts') %>
+</body>
+</html>
