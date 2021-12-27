@@ -15,7 +15,13 @@
             <br>
             <p>RATING: <%= actor.rating %></p>
             <br>
-            <p>FAVORITE MOVIE: <%= actor.favorite_movie_id %></p>
+            <p>FAVORITE MOVIE: <% if (actor.favorite_movie_id) { %>
+                <% allMovies.forEach(movie => { %>
+                       <%= actor.favorite_movie_id == movie.id ? movie.title : null %>
+                <% }) %>
+                <% } else { %>
+                 <%= actor.favorite_movie_id %> 
+               <% } %></p>
             <br>
         <section>
             <a class="botonVolver" href="/actors">Listado de Actores</a>

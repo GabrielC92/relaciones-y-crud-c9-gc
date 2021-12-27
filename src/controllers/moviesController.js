@@ -2,6 +2,7 @@ const path = require('path');
 const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
+const moment = require('moment');
 const {validationResult} = require('express-validator');
 
 //Aqui tienen una forma de llamar a cada uno de los modelos
@@ -15,19 +16,28 @@ const Actors = db.Actor;
 
 const moviesController = {
     'list': (req, res) => {
-        db.Movie.findAll()
+        db.Movie.findAll({
+            include: ['genre']
+        })
             .then(movies => {
                 return res.render('moviesList.ejs', {movies})
             })
             .catch(error => console.log(error));
     },
     'detail': (req, res) => {
-        db.Movie.findByPk(req.params.id,{
-            include: ['genre']
+        let promMovies = db.Movie.findByPk(req.params.id,{
+            include: ['genre','actors']
         })
-            .then(movie => {
+        let promGenres = db.Genre.findAll()
+        let promActors = db.Actor.findAll()
+        Promise.all([promMovies, promGenres, promActors])
+            .then(([movie, allGenres, allActors]) => {
                 //return res.send(movie)
-                return res.render('moviesDetail.ejs', {movie});
+                return res.render('moviesDetail.ejs', {
+                    movie,
+                    allGenres,
+                    allActors
+                });
             })
             .catch(error => console.log(error));
     },
@@ -76,11 +86,14 @@ const moviesController = {
     },
     //Aqui dispongo las rutas para trabajar con el CRUD
     add: (req, res) => {
-        Genres.findAll({
-            order: [['name']]
-        })
-            .then(allGenres => res.render('moviesAdd',{
-                allGenres
+        let promGenres = Genres.findAll({order: [['name']]});
+        let promActors = Actors.findAll({order: [['last_name']]});
+        
+        Promise
+        .all([promGenres, promActors])
+            .then(([allGenres, allActors]) => res.render('moviesAdd',{
+                allGenres,
+                allActors
             }))
             .catch(error => console.log(error));
     },
@@ -103,14 +116,18 @@ const moviesController = {
                 })
                 .catch(error => console.log(error));
         } else {
-            Genres.findAll({
-                order: [['name']]
-            })
-                .then(allGenres => res.render('moviesAdd',{
+            let promGenres = Genres.findAll({order: [['name']]});
+            let promActors = Actors.findAll({order: [['last_name']]});
+            
+            Promise
+            .all([promGenres, promActors])
+            .then(([allGenres, allActors]) => {
+                return res.render(path.resolve(__dirname, '..', 'views',  'moviesAdd'), {
+                    allGenres,
+                    allActors,
                     errors: errors.mapped(),
-                    old: req.body,
-                    allGenres
-                }))
+                    old: req.body
+                })})
                 .catch(error => console.log(error));
         }
     },
@@ -122,10 +139,12 @@ const moviesController = {
             order: [['name']]
         })
         Promise.all(([Movie,allGenres]))
-            .then(([Movie,allGenres]) => res.render('moviesEdit',{
-                Movie,
-                allGenres
-            }))
+            .then(([Movie,allGenres]) => {
+                Movie.release_date = moment(Movie.release_date).format('L');
+                return res.render('moviesEdit',{
+                    Movie,
+                    allGenres
+                })})
             .catch(error => console.log(error));
     },
     update: (req, res) => {
@@ -151,6 +170,7 @@ const moviesController = {
             })
             Promise.all(([Movie,allGenres]))
                 .then(([Movie,allGenres]) => {
+                    Movie.release_date = moment(Movie.release_date).format('L');
                     return res.render('moviesEdit',{
                         errors: errors.mapped(),
                         old: req.body,
@@ -172,7 +192,8 @@ const moviesController = {
         Movies.destroy({
             where: {
                 id: req.params.id
-            }
+            },
+            force: true
         })
             .then(() => res.redirect('/movies'))
             .catch(error => console.log(error));

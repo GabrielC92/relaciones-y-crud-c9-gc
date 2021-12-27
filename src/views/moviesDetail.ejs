@@ -18,7 +18,13 @@
         <br>
         <p>RELEASE DATE: <%= movie.release_date %></p>
         <br>
-        <p>GENRE: <%= movie.genre_id %></p>
+        <p>GENRE: <% if (movie.genre_id) { %>
+         <% allGenres.forEach(genre => { %>
+                <%= movie.genre_id == genre.id ? genre.name : null %>
+         <% }) %>
+         <% } else { %>
+          <%= movie.genre_id %> 
+        <% } %></p>
         <br>
         <section>
             <!--Aquí debe colocar los botones de Modificar - Borrar y Listado de Películas-->
